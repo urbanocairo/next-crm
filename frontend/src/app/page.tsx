@@ -8,19 +8,11 @@ import Image from "next/image";
 
 
 
+
 export default function Home() {
   const [typing, setTyping] = useState(false);
   
     useEffect(() => {
-      // Esegui qualcosa quando il componente è montato, se necessario
-      toast.loading('Loading...', {
-        duration: 2000,
-        position: 'top-center',
-        style: {
-          background: '#333',
-          color: '#fff',
-        },
-      });
       setTyping(true);
     }, []);
   
@@ -36,41 +28,39 @@ export default function Home() {
         iBookie
         </div>
         <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
+          <li className="mb-2 tracking-[-.01em] px-1">
             Comincia a cercare in libreria {" "}
             <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
               il tuo prossimo libro da leggere
             </code>
           </li>
-            <li className="bg-black/[.723] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] text-gray-100 font-semibold">
-            <span className={typing ? 'typing-effect' : ''}>
-              Io ti tengo d'occhio le tue statistiche di lettura...
-            </span>
+          <li className={`${typing ? 'typing-effect' : ''} bg-black/[.723] px-1 tracking-[-.01em] dark:bg-white/[.06] rounded font-[family-name:var(--font-geist-mono)] text-gray-100 font-semibold`}>
+              Io tengo d'occhio le tue statistiche di lettura... {" "}
             </li>
             <style jsx>{`
             .typing-effect {
-              display: inline-block;
-              white-space: nowrap;
-              overflow: hidden;
-              border-right: 2px transparent;
-              animation: typing 2s;
-            }
+                overflow: hidden; /* Ensures the content is not revealed until the animation */
+                border-right: .15em solid orange; /* The typwriter cursor */
+                white-space: nowrap; /* Keeps the content on a single line */
+                margin: 0 auto; /* Gives that scrolling effect as the typing happens */
+                text-align: left; /* Left text */
+                letter-spacing: .01em; /* Adjust as needed */
+                animation: 
+                  typing 3.5s steps(40, end),
+                  blink-caret .75s step-end infinite;
+              }
 
-            @keyframes typing {
-              from {
-              width: 0;
+              /* The typing effect */
+              @keyframes typing {
+                from { width: 0 }
+                to { width: 100% }
               }
-              to {
-              width: 100%;
-              }
-              from {
-              border-color: transparent;
-            }
-              to {
-              border-color: white;
-              }
-            }
 
+              /* The typewriter cursor effect */
+              @keyframes blink-caret {
+                from, to { border-color: transparent }
+                50% { border-color: orange; }
+              }
             `}</style>
         </ol>
 
@@ -150,3 +140,4 @@ export default function Home() {
     </div>
   );
 }
+
